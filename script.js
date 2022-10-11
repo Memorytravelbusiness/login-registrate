@@ -1,17 +1,30 @@
-function onSuccess(googleUser) {
-      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+function onSignIn(googleUser)
+{
+  let profile = googleUser.getBasicProfile();
+  auth(action = "login", profile);
+}
+function auth(action, profile)
+{
+
+  let data = { UserAction: action };
+  if (profile)
+  {
+    data = {
+      UserName: profile.getGivenProfile(),
+      UserLastName: profile.getFamilyprofile(),
+      UserEmail: profile.getEmail(),
+      UserAction: action,
+    };
     }
-    function onFailure(error) {
-      console.log(error);
-    }
-    function renderButton() {
-      gapi.signin2.render('my-signin2', {
-        'scope': 'profile email',
-        'width': 240,
-        'height': 50,
-        'longtitle': true,
-        'theme': 'dark',
-        'onsuccess': onSuccess,
-        'onfailure': onFailure
-      });
-    }
+}
+$, ajax(
+  {
+    type: "POST",
+    url: "../users/user.php",
+    data: data,
+    success: function (data)
+    {
+      console.log(data);
+      }
+}
+)
