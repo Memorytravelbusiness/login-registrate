@@ -1,4 +1,4 @@
-function onSignIn(googleUser)
+function SignIn2(googleUser)
 {
   let profile = googleUser.getBasicProfile();
   auth(action = "login", profile);
